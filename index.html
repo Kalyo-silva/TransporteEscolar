@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transporte Escolar</title>
+
+    <link rel="stylesheet" href="layout.css">
+</head>
+<body>
+    <header class="MainHeader">
+        <nav>
+            <p onclick="openContainer('RotasContainer')">Rotas</p>
+            <p onclick="openContainer('VeiculosContainer')">Veículos</p>
+            <p onclick="openContainer('GastosContainer')">Gastos</p>
+            <p onclick="openContainer('ResultadosContainer')">Resultados</p>
+        </nav>
+        <svg onclick="darkMode()" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm40-83q119-15 199.5-104.5T800-480q0-123-80.5-212.5T520-797v634Z"/></svg>
+    </header>
+    <main id="gridContainer">
+        <div id="RotasContainer">
+            <header>
+                <p>Rotas</p>
+                <svg onclick="OpenForm(this)" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+            </header>
+            <section class="Form">
+                <label for="titulo">Titulo</label>
+                <input type="text" name="titulo" id="titulo">
+
+                <section class="dualContainer">
+                    <div class="labeledInput">
+                        <label for="distancia">Distância (Km)</label>
+                        <input type="number" id="distancia" name="distancia" step="1" min="0">    
+                    </div>
+                    
+                    <div class="labeledInput">
+                        <label for="alunos">Média de Alunos na Rota</label>
+                        <input type="number" id="alunos" name="alunos" step="1" min="0">
+                    </div>
+                </section>
+
+                <button onclick="cadastrarRota(this)">Cadastrar Rota</button>
+            </section>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rota</th>
+                        <th>Distância</th>
+                        <th>Alunos</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="routesTable"> 
+
+                </tbody>
+            </table>
+        </div>
+        <div id="VeiculosContainer">
+            <header>
+                <p>Veículos</p>
+                <svg onclick="OpenForm(this)" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+            </header>
+            <section class="Form">
+                <label for="modelo">Modelo</label>
+                <input type="text" name="modelo" id="modelo">
+
+                <label for="consumo">Consumo (Km/l)</label>
+                <input type="number" name="consumo" id="consumo">
+
+                <button onclick="CadastrarVeiculo(this)">Cadastrar Veículo</button>
+            </section>
+
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Modelo</th>
+                        <th>Consumo</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id='vehiclesTable'>
+
+                </tbody>
+            </table>
+        </div> 
+        <div id="GastosContainer">
+            <header>
+                <p>Gastos</p>
+                <svg onclick="OpenForm(this)" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+            </header>
+            <section class="Form">
+                <label for="">Valor do Combustivel (R$)</label>
+                <input type="number">
+
+                <button onclick="cadastrarGasto(this)">Cadastrar Gasto</button>
+            </section>         
+
+            <table>
+                <tr>
+                    <th>Valor do combustível</th>
+                </tr>
+                <tr>
+                    <td id="valueCosts">R$0.00</td>
+                </tr>
+            </table>
+        </div>
+        <div id="ResultadosContainer">
+            <header>
+                <p>Resultados</p>
+                <aside>
+                    <button id="ButtonResults" onclick="OpenModalDetails()"">Mostrar Resultados</button>
+                    <button onclick="calculaRota()">Executar</button>
+                </aside>
+            </header>
+            <section id="resultRoute">
+            </section>
+        </div>
+    </main>
+    <script src="effects.js"></script>
+    <script src="data.js"></script>
+</body>
+</html>calculaRota
