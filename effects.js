@@ -67,7 +67,7 @@ function darkMode(){
     bDarkMode = !bDarkMode
 }
 
-async function createRoute(numNodes){
+async function createRoute(numNodes, resultadosPorRota, resutadosGerais){
     container = document.getElementById('resultRoute'); 
     
     container.style.gridTemplateColumns = 'repeat('+((numNodes*2)+1)+', auto)';
@@ -142,6 +142,9 @@ async function createRoute(numNodes){
     check.style.opacity = '1';
 
     document.getElementById('ButtonResults').style.opacity = '1';
+    document.getElementById('ButtonResults').disabled = false;
+
+    OpenModalDetails(resultadosPorRota, resutadosGerais);   
 }
 
 function updateRoutesTable(contents){
@@ -208,6 +211,26 @@ function RetornaCampoInválido(listaCamposInvalidos){
     })
 }
 
+function RetornaCamposNotChecked(title){
+    closePopUp();
+
+    let popup = document.createElement('article');
+    popup.id = 'errorDialog'
+
+    let text = document.createElement('p')
+    text.innerText = 'A seção de ['+title+'] Não possui um valor selecionado.'
+    
+    let close = document.createElement('p');
+    close.className = 'close';
+    close.onclick = () => {closePopUp()};
+    close.innerText = 'x';
+
+    popup.appendChild(text);
+    popup.appendChild(close);
+
+    document.body.appendChild(popup);
+}
+
 function removeInvalid(campo){
     campo.className = campo.className.replace(' invalid', '');
     campo.previousElementSibling.style = 'color: var(--font-color);';
@@ -220,7 +243,7 @@ function closePopUp(){
         popup.remove();
 }
 
-function OpenModalDetails(){
+function OpenModalDetails(resultadosPorRota, resutadosGerais){
     let modalBg = document.createElement('div');
     modalBg.id = 'modalBg';
     let modal = document.createElement('div')
@@ -237,6 +260,9 @@ function OpenModalDetails(){
     close.innerText = 'x';
     close.onclick = () => {modalBg.remove()};
     modalHeader.append(close)
+
+    let container = document.createElement('section');
+    modal.append(container);
 
     modalBg.appendChild(modal);
     document.body.appendChild(modalBg);
