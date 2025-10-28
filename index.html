@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" href="layout.css">
 </head>
-<body>
+<body onload="setDarkmodeByTime()">
     <header class="MainHeader">
         <nav>
             <p onclick="openContainer('RotasContainer')">Rotas</p>
@@ -91,8 +91,8 @@
                 <svg onclick="OpenForm(this)" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
             </header>
             <section class="Form">
-                <label for="">Valor do Combustivel (R$)</label>
-                <input type="number">
+                <label for="custoCombustivel">Valor do Combustivel (R$/l)</label>
+                <input type="number" name="custoCombustivel" id="custoCombustivel">
 
                 <button onclick="cadastrarGasto(this)">Cadastrar Gasto</button>
             </section>         
@@ -102,7 +102,7 @@
                     <th>Valor do combustível</th>
                 </tr>
                 <tr>
-                    <td id="valueCosts">R$0.00</td>
+                    <td id="valueCosts">R$0.00 / Litro</td>
                 </tr>
             </table>
         </div>
@@ -121,4 +121,4 @@
     <script src="effects.js"></script>
     <script src="data.js"></script>
 </body>
-</html>calculaRota
+</html>

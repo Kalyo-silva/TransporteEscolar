@@ -2,6 +2,14 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function setDarkmodeByTime(){
+    time = new Date();
+    
+    if (time.getHours() > 19){
+        darkMode();
+    }
+}
+
 var resultContainerSize = 3;
 
 function updateContainerResultSize(){
@@ -136,10 +144,6 @@ async function createRoute(numNodes){
     document.getElementById('ButtonResults').style.opacity = '1';
 }
 
-function OpenModalDetails(){
-    
-}
-
 function updateRoutesTable(contents){
     let table = document.getElementById('routesTable');
     table.innerHTML = '';
@@ -168,5 +172,72 @@ function updateVehiclesTable(contents){
 }
 
 function updateCosts(cost){
-    document.getElementById('valueCosts').innerText = "R$"+Number.parseFloat(cost).toFixed(2);
+    document.getElementById('valueCosts').innerText = "R$"+Number.parseFloat(cost).toFixed(2)+' / Litro';
+}
+
+function RetornaCampoInválido(listaCamposInvalidos){
+    closePopUp();
+
+    let popup = document.createElement('article');
+    popup.id = 'errorDialog'
+
+    let text = document.createElement('p')
+
+    if (listaCamposInvalidos.length == 1){
+        text.innerText = 'O campo ['+listaCamposInvalidos[0].name+'] do tipo ['+listaCamposInvalidos[0].type+'] está inválido e precisa ser preenchido corretamente para realizar o cadastro, tente novamente.';
+    }
+    else{
+        text.innerText = 'Foram incontrados vários campos inválidos quee precisa ser preenchidos corretamente para realizar o cadastro, tente novamente.';    
+    }
+    
+    let close = document.createElement('p');
+    close.className = 'close';
+    close.onclick = () => {closePopUp()};
+    close.innerText = 'x';
+
+    popup.appendChild(text);
+    popup.appendChild(close);
+
+    document.body.appendChild(popup);
+
+    listaCamposInvalidos.map((campo) => {
+        campo.className += ' invalid';
+        campo.previousElementSibling.style = 'color: red;';
+
+        campo.addEventListener('focus', () => {removeInvalid(campo)});
+    })
+}
+
+function removeInvalid(campo){
+    campo.className = campo.className.replace(' invalid', '');
+    campo.previousElementSibling.style = 'color: var(--font-color);';
+}
+
+function closePopUp(){
+    let popup = document.getElementById('errorDialog');
+
+    if (popup != null)
+        popup.remove();
+}
+
+function OpenModalDetails(){
+    let modalBg = document.createElement('div');
+    modalBg.id = 'modalBg';
+    let modal = document.createElement('div')
+    modal.id = 'modal';
+
+    let modalHeader = document.createElement('header');
+    modal.append(modalHeader);
+
+    let title = document.createElement('p');
+    title.innerText = 'Resultados Gerais';
+    modalHeader.append(title)
+    let close = document.createElement('p');
+    close.className = 'close';
+    close.innerText = 'x';
+    close.onclick = () => {modalBg.remove()};
+    modalHeader.append(close)
+
+    modalBg.appendChild(modal);
+    document.body.appendChild(modalBg);
 }

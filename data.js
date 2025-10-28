@@ -8,61 +8,88 @@ function getCamposByParent(button){
     return Array.from(form.getElementsByTagName('input'));
 }
 
-function validaCampo(campo){
+function validaCampos(listaCampos){
+    let camposInvalidos = []
+
+    listaCampos.map((campo) => {
+        switch (campo.type) {
+            case 'text':
+                if (!validaCampoText(campo)){
+                    camposInvalidos.push(campo)
+                };     
+                break;   
+            case 'number':
+                if (!validaCampoNumber(campo)){
+                    camposInvalidos.push(campo)
+                };
+                break;
+            default:
+                camposInvalidos.push(campo)
+                break;
+        }
+    })
+    
+    if (camposInvalidos.length > 0){
+        console.log(camposInvalidos);
+        RetornaCampoInválido(camposInvalidos);
+        return false;
+    }
     return true;
+}
+
+function validaCampoText(campo){
+    if (campo.value.trim().length <= 0){
+        return false;
+    }
+    return true;
+}
+
+function validaCampoNumber(campo){
+    if (typeof parseFloat(campo.value) != 'number' 
+    || Number.isNaN(parseFloat(campo.value)) 
+    || campo.value < 0){
+        return false;
+    }
+    return true;   
 }
 
 function cadastrarRota(button){
     let campos = getCamposByParent(button)
     let rota = {}
 
-    rota['id'] = routes.length;
+    if (validaCampos(campos)){
+        rota['id'] = routes.length; // campo padrão 
+        campos.map((campo) => {
+            rota[campo.name] = campo.value; // pega os campos dinâmicos baseados nos inputs do front
+        })
+        rota['checked'] = false; // campo padrão
+        routes.push(rota);
+        updateRoutesTable(routes);
+    }
 
-    campos.map((campo) => {
-        if (!validaCampo(campo)){
-            return RetornaCampoInválido(campo, campo.value);
-        }
-        rota[campo.name] = campo.value;
-    })
-
-    rota['checked'] = false;
-
-    routes.push(rota);
-
-    updateRoutesTable(routes);
 }
 
 function CadastrarVeiculo(button){
     let campos = getCamposByParent(button)
-
     let veiculo = {}
 
-    veiculo['id'] = vehicles.length;
-
-    campos.map((campo) => {
-        if (!validaCampo(campo)){
-            return RetornaCampoInválido(campo, campo.value);
-        }
-        veiculo[campo.name] = campo.value;
-    })
-
-    veiculo['checked'] = false;
-
-    vehicles.push(veiculo);
-
-    updateVehiclesTable(vehicles)
+    if (validaCampos(campos)){
+        veiculo['id'] = vehicles.length;
+        campos.map((campo) => {
+            veiculo[campo.name] = campo.value;
+        })
+        veiculo['checked'] = false;
+        vehicles.push(veiculo);
+        updateVehiclesTable(vehicles)
+    }
 }
 
 function cadastrarGasto(button){
     let campos = getCamposByParent(button);
-
-    if (!validaCampo(campos[0])){
-        return RetornaCampoInválido(campos[0], campos[0].value);
+    if (validaCampos(campos)){
+        cost = campos[0].value;
+        updateCosts(cost);
     }
-
-    cost = campos[0].value;
-
-    updateCosts(cost);
 }
 
 function selectThis(id_route){
