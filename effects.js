@@ -141,9 +141,6 @@ async function createRoute(numNodes, resultadosPorRota, resutadosGerais){
 
     check.style.opacity = '1';
 
-    document.getElementById('ButtonResults').style.opacity = '1';
-    document.getElementById('ButtonResults').disabled = false;
-
     OpenModalDetails(resultadosPorRota, resutadosGerais);   
 }
 
@@ -243,26 +240,88 @@ function closePopUp(){
         popup.remove();
 }
 
-function OpenModalDetails(resultadosPorRota, resutadosGerais){
+function OpenModalDetails(resultadosPorRota, resultadosGerais){
     let modalBg = document.createElement('div');
     modalBg.id = 'modalBg';
     let modal = document.createElement('div')
     modal.id = 'modal';
 
     let modalHeader = document.createElement('header');
-    modal.append(modalHeader);
+    modal.appendChild(modalHeader);
 
     let title = document.createElement('p');
     title.innerText = 'Resultados Gerais';
-    modalHeader.append(title)
+    title.style.fontWeight = 'Bold';
+    modalHeader.appendChild(title)
     let close = document.createElement('p');
     close.className = 'close';
     close.innerText = 'x';
     close.onclick = () => {modalBg.remove()};
-    modalHeader.append(close)
+    modalHeader.appendChild(close)
 
     let container = document.createElement('section');
-    modal.append(container);
+    container.style = 'display: flex; justify-content: space-between; gap: 1rem;';
+    modal.appendChild(container);
+
+    let routeResultsContainer = document.createElement('section');
+    routeResultsContainer.style = 'display:flex; gap:1rem; flex-direction:column; width: 100%;'
+    container.appendChild(routeResultsContainer);
+
+    resultadosPorRota.map((result) => {
+        let resultcontainer = document.createElement('article');
+        resultcontainer.style = 'border: 1px solid gray; padding: 1rem;';
+        routeResultsContainer.appendChild(resultcontainer);
+
+        let resultTitle = document.createElement('p');
+        resultTitle.style = 'font-weight: Bold; border-bottom: 1px solid gray; margin-bottom: 1rem;';
+        resultTitle.innerText = result.titulo;
+
+        let custo = document.createElement('p');
+        custo.innerText = 'Custo: R$'+result.custoRota;
+        let custoPorDistancia = document.createElement('p');
+        custoPorDistancia.innerText = 'Custo/Km: R$'+result.custoPorDistancia;
+        let custoPorAluno = document.createElement('p');
+        custoPorAluno.innerText = 'Custo/Alunos: R$'+result.custoPorAluno;
+        let eficiencia = document.createElement('p');
+        eficiencia.innerText = 'Eficiencia: '+result.eficiencia+' (Km/Aluno)';
+
+        resultcontainer.appendChild(resultTitle);
+        resultcontainer.appendChild(custo);
+        resultcontainer.appendChild(custoPorDistancia);
+        resultcontainer.appendChild(custoPorAluno);
+        resultcontainer.appendChild(eficiencia);
+
+    });
+
+    ResultGeralContainer = document.createElement('article');
+    ResultGeralContainer.style = 'border: 1px solid gray; padding: 1rem; width: 100%;';
+    container.appendChild(ResultGeralContainer);
+    
+    let resultGeralTitle = document.createElement('p');
+    resultGeralTitle.style = 'font-weight: Bold; border-bottom: 1px solid gray; margin-bottom: 1rem;';
+    resultGeralTitle.innerText = 'Resultado Total';
+
+    ResultGeralContainer.appendChild(resultGeralTitle);
+
+    let distanciaTotal = document.createElement('p');
+    distanciaTotal.innerText = 'Distância Total: '+resultadosGerais.distanciaTotal+' Km';
+    let alunosTotal = document.createElement('p');
+    alunosTotal.innerText = 'Quantidade de Alunos Total: '+resultadosGerais.alunosTotal+' Alunos';
+    let custoTotal = document.createElement('p');
+    custoTotal.innerText = 'Custo Total: R$'+parseFloat(resultadosGerais.custoTotal).toFixed(2);
+    let custoPorDistanciaTotal = document.createElement('p');
+    custoPorDistanciaTotal.innerText = 'Custo/Km: R$'+resultadosGerais.custoPorDistanciaTotal.toFixed(2);
+    let custoPorAlunoTotal = document.createElement('p');
+    custoPorAlunoTotal.innerText = 'Custo/Alunos: R$'+resultadosGerais.custoPorAlunoTotal.toFixed(2);
+    let eficienciaTotal = document.createElement('p');
+    eficienciaTotal.innerText = 'Eficiencia: '+resultadosGerais.eficienciaTotal.toFixed(2)+' (Km/Aluno)';
+
+    ResultGeralContainer.appendChild(distanciaTotal);
+    ResultGeralContainer.appendChild(alunosTotal);
+    ResultGeralContainer.appendChild(custoTotal);
+    ResultGeralContainer.appendChild(custoPorDistanciaTotal);
+    ResultGeralContainer.appendChild(custoPorAlunoTotal);
+    ResultGeralContainer.appendChild(eficienciaTotal);
 
     modalBg.appendChild(modal);
     document.body.appendChild(modalBg);

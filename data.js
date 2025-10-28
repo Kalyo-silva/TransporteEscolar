@@ -136,12 +136,12 @@ function calculaRota(){
 
         results = [];
         finalResult = {
-            "distanciaTotal" : 0,
-            "alunosTotal" : 0,
-            "custoTotal" : 0,
-            "custoPorDistanciaTotal" : 0,
-            "custoPorAlunoTotal" : 0,
-            "eficienciaTotal" : 0,
+            "distanciaTotal" : parseFloat(0),
+            "alunosTotal" : parseFloat(0),
+            "custoTotal" : parseFloat(0),
+            "custoPorDistanciaTotal" : parseFloat(0),
+            "custoPorAlunoTotal" : parseFloat(0),
+            "eficienciaTotal" : parseFloat(0),
         };
 
         let rotasSelecionadas = routes.filter((rota) => rota.checked == true);
@@ -152,7 +152,7 @@ function calculaRota(){
             let custoRota = getCustoRota(rota.distancia, veiculo.consumo, valCombustivel);
 
             let resultRota = {
-                "Titulo" : rota.titulo,
+                "titulo" : rota.titulo,
                 "custoRota" : (custoRota).toFixed(2),
                 "custoPorDistancia" : (custoRota / rota.distancia).toFixed(2),
                 "custoPorAluno" : (custoRota / rota.alunos).toFixed(2),
@@ -161,14 +161,16 @@ function calculaRota(){
 
             finalResult.distanciaTotal += parseFloat(rota.distancia);
             finalResult.alunosTotal += parseFloat(rota.alunos);
-            finalResult.custoTotal += parseFloat(resultRota.custoRota).toFixed(2);
+            finalResult.custoTotal = parseFloat(finalResult.custoTotal) + parseFloat(resultRota.custoRota);
 
             results.push(resultRota)
         })
 
-        finalResult.custoPorDistanciaTotal += (finalResult.custoTotal / finalResult.distanciaTotal).toFixed(2);
-        finalResult.custoPorAlunoTotal += (finalResult.custoTotal / finalResult.alunosTotal).toFixed(2);
-        finalResult.eficienciaTotal += (finalResult.distanciaTotal / finalResult.alunosTotal).toFixed(2);
+        finalResult.custoPorDistanciaTotal += parseFloat(finalResult.custoTotal / finalResult.distanciaTotal);
+        finalResult.custoPorAlunoTotal += parseFloat(finalResult.custoTotal / finalResult.alunosTotal);
+        finalResult.eficienciaTotal += parseFloat(finalResult.distanciaTotal / finalResult.alunosTotal);
+
+        console.log(finalResult);
 
         createRoute(rotasSelecionadas.length, results, finalResult);
     }
