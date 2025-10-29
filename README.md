@@ -42,12 +42,10 @@ Para utilizar o programa, basta abrir o arquivo index.html em seu navegador.
 
 ## 🖼️ Exemplos de Entradas e Saídas do Sistema
 
-- Entrada
-
+Entrada
 ![Entrada](images/entrada.png)
 
-- Saída
-
+Saída
 ![Saida](images/Saida.png)
 
 ## Créditos
