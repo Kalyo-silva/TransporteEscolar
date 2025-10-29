@@ -9,6 +9,10 @@ O Objetivo deste projeto é realizar o cálculo de gastos de rotas de onibus par
 
 Além disso é possivel realizar o cálculo de várias rotas simultaneamente, obtendo dados individuas sobre cada rota bem como sobre o trajeto como um todo.
 
+## 🔌 instalação
+
+Para utilizar o programa, basta abrir o arquivo index.html em seu navegador.
+
 ## ⚙️ Funcionalidades
 
  - Cadastro de rotas 
