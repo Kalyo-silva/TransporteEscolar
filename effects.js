@@ -332,13 +332,13 @@ function OpenModalDetails(resultadosPorRota, resultadosGerais){
     let alunosTotal = document.createElement('p');
     alunosTotal.innerText = 'Quantidade de Alunos Total: '+resultadosGerais.alunosTotal+' Alunos';
     let custoTotal = document.createElement('p');
-    custoTotal.innerText = 'Custo Total: R$'+parseFloat(resultadosGerais.custoTotal).toFixed(2);
+    custoTotal.innerText = 'Custo Total: R$'+resultadosGerais.custoTotal;
     let custoPorDistanciaTotal = document.createElement('p');
-    custoPorDistanciaTotal.innerText = 'Custo/Km: R$'+resultadosGerais.custoPorDistanciaTotal.toFixed(2);
+    custoPorDistanciaTotal.innerText = 'Custo/Km: R$'+resultadosGerais.custoPorDistanciaTotal;
     let custoPorAlunoTotal = document.createElement('p');
-    custoPorAlunoTotal.innerText = 'Custo/Alunos: R$'+resultadosGerais.custoPorAlunoTotal.toFixed(2);
+    custoPorAlunoTotal.innerText = 'Custo/Alunos: R$'+resultadosGerais.custoPorAlunoTotal;
     let eficienciaTotal = document.createElement('p');
-    eficienciaTotal.innerText = 'Eficiencia: '+resultadosGerais.eficienciaTotal.toFixed(2)+' (Km/Aluno)';
+    eficienciaTotal.innerText = 'Eficiencia: '+resultadosGerais.eficienciaTotal+' (Km/Aluno)';
 
     ResultGeralContainer.appendChild(distanciaTotal);
     ResultGeralContainer.appendChild(alunosTotal);

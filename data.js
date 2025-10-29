@@ -154,6 +154,18 @@ function getCustoRota(distancia, consumo, valor){
     return (distancia / consumo) * valor;
 }
 
+function getCustoPorDistancia(custo, distancia){
+    return (custo / distancia).toFixed(2);
+}
+
+function getCustoPorAlunos(custo, alunos){
+    return (custo / alunos).toFixed(2);
+}
+
+function getEficiencia(distancia, alunos){
+    return (distancia / alunos).toFixed(2);
+}
+
 //Função que implementa a regra de negócio e salva os resultados em memória.
 function calculaRota(){
     if (validaCamposChecked(routes, 'Rotas') && validaCamposChecked(vehicles, 'Veículos') && validaGasto(cost)){
@@ -179,9 +191,9 @@ function calculaRota(){
             let resultRota = {
                 "titulo" : rota.titulo,
                 "custoRota" : (custoRota).toFixed(2),
-                "custoPorDistancia" : (custoRota / rota.distancia).toFixed(2),
-                "custoPorAluno" : (custoRota / rota.alunos).toFixed(2),
-                "eficiencia" : (rota.distancia / rota.alunos).toFixed(2)
+                "custoPorDistancia" : getCustoPorDistancia(custoRota, rota.distancia),
+                "custoPorAluno" : getCustoPorAlunos(custoRota, rota.alunos),
+                "eficiencia" : getEficiencia(rota.distancia, rota.alunos)
             };
 
             finalResult.distanciaTotal += parseFloat(rota.distancia);
@@ -191,9 +203,9 @@ function calculaRota(){
             results.push(resultRota)
         })
 
-        finalResult.custoPorDistanciaTotal += parseFloat(finalResult.custoTotal / finalResult.distanciaTotal);
-        finalResult.custoPorAlunoTotal += parseFloat(finalResult.custoTotal / finalResult.alunosTotal);
-        finalResult.eficienciaTotal += parseFloat(finalResult.distanciaTotal / finalResult.alunosTotal);
+        finalResult.custoPorDistanciaTotal = getCustoPorDistancia(finalResult.custoTotal, finalResult.distanciaTotal);
+        finalResult.custoPorAlunoTotal = getCustoPorAlunos(finalResult.custoTotal, finalResult.alunosTotal);
+        finalResult.eficienciaTotal = getEficiencia(finalResult.distanciaTotal, finalResult.alunosTotal);
 
         console.log(finalResult);
 

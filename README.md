@@ -35,6 +35,21 @@ Para utilizar o programa, basta abrir o arquivo index.html em seu navegador.
 - effects.js // Arquivo de manipulação de efeitos em tela
 ```
 
+## 📱 Aplicação do Paradigma Funcional
+
+    - Utilização de funções de ordem superior para manipulação de dados
+    - Utilização de funções puras para os cálculos e validações dos campos
+
+## 🖼️ Exemplos de Entradas e Saídas do Sistema
+
+    - Entrada
+
+    ![Entrada](images/entrada.png)
+
+    - Saída
+
+    ![Saida](images/Saida.png)
+
 ## Créditos
 
 Desenvolvido Por [Kalyo Airan da Silva](https://github.com/kalyo-silva) | 2025
