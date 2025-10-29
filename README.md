@@ -44,11 +44,11 @@ Para utilizar o programa, basta abrir o arquivo index.html em seu navegador.
 
     - Entrada
 
-    ![Entrada](images/entrada.png)
+![Entrada](images/entrada.png)
 
     - Saída
 
-    ![Saida](images/Saida.png)
+![Saida](images/Saida.png)
 
 ## Créditos
 
