@@ -37,16 +37,16 @@ Para utilizar o programa, basta abrir o arquivo index.html em seu navegador.
 
 ## 📱 Aplicação do Paradigma Funcional
 
-    - Utilização de funções de ordem superior para manipulação de dados
-    - Utilização de funções puras para os cálculos e validações dos campos
+- Utilização de funções de ordem superior para manipulação de dados
+- Utilização de funções puras para os cálculos e validações dos campos
 
 ## 🖼️ Exemplos de Entradas e Saídas do Sistema
 
-    - Entrada
+- Entrada
 
 ![Entrada](images/entrada.png)
 
-    - Saída
+- Saída
 
 ![Saida](images/Saida.png)
 
