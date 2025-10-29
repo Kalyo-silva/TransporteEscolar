@@ -1,7 +1,35 @@
+/*
+
+    ==== arquivo de effeitos do front-end ====
+    
+    - Responsável pela criação e manipulação de elementos na tela do usuário
+
+*/
+
+//Função de sleep para animações via js
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// Função de Darkmode para o estilo da página
+var bDarkMode = false;
+
+function darkMode(){
+    if (bDarkMode){
+        document.documentElement.style.setProperty("--bgColor", "#ffffff");
+        document.documentElement.style.setProperty("--fgColor", "#f1f1f1");
+        document.documentElement.style.setProperty("--font-color", "#151515");
+    }
+    else{
+        document.documentElement.style.setProperty("--bgColor", "#151515");
+        document.documentElement.style.setProperty("--fgColor", "#252525");
+        document.documentElement.style.setProperty("--font-color", "#ffffff");
+    }
+
+    bDarkMode = !bDarkMode
+}
+
+//habilita o modo dark automaticamente a partir das 20:00
 function setDarkmodeByTime(){
     time = new Date();
     
@@ -10,13 +38,14 @@ function setDarkmodeByTime(){
     }
 }
 
+//Ao esconder algum dos paineis, redimensiona o grid para que a aba resultado fique sempre abaixo
 var resultContainerSize = 3;
-
 function updateContainerResultSize(){
     document.getElementById('ResultadosContainer').style.gridColumn = '1 / span '+resultContainerSize;
     document.getElementById('gridContainer').style.gridTemplateColumns = 'repeat('+resultContainerSize+',auto)'
 }
 
+//Esconde ou mostra cada painel do sistema
 function openContainer(containerName){
     let container = document.getElementById(containerName);
 
@@ -36,7 +65,7 @@ function openContainer(containerName){
     updateContainerResultSize();
 }
 
-
+//Esconde ou abre o formulario de cadastro de cada painel, baseado na herança do botão
 function OpenForm(button){
     form = button.parentNode.parentNode.getElementsByClassName('Form');
 
@@ -50,23 +79,7 @@ function OpenForm(button){
     }
 }
 
-var bDarkMode = false;
-
-function darkMode(){
-    if (bDarkMode){
-        document.documentElement.style.setProperty("--bgColor", "#ffffff");
-        document.documentElement.style.setProperty("--fgColor", "#f1f1f1");
-        document.documentElement.style.setProperty("--font-color", "#151515");
-    }
-    else{
-        document.documentElement.style.setProperty("--bgColor", "#151515");
-        document.documentElement.style.setProperty("--fgColor", "#252525");
-        document.documentElement.style.setProperty("--font-color", "#ffffff");
-    }
-
-    bDarkMode = !bDarkMode
-}
-
+// Função responsável pela animação das rotas sendo geradas e a apresentação do modal de resultados
 async function createRoute(numNodes, resultadosPorRota, resutadosGerais){
     container = document.getElementById('resultRoute'); 
     
@@ -144,6 +157,7 @@ async function createRoute(numNodes, resultadosPorRota, resutadosGerais){
     OpenModalDetails(resultadosPorRota, resutadosGerais);   
 }
 
+// Função que altera a tabela de rotas em tela
 function updateRoutesTable(contents){
     let table = document.getElementById('routesTable');
     table.innerHTML = '';
@@ -158,6 +172,7 @@ function updateRoutesTable(contents){
     })
 }
 
+// Função que altera a tabela de veiculos em tela
 function updateVehiclesTable(contents){
     let table = document.getElementById('vehiclesTable');
     table.innerHTML = '';
@@ -171,10 +186,12 @@ function updateVehiclesTable(contents){
     })
 }
 
+// Função que altera o campo de custo do combustível na tela
 function updateCosts(cost){
     document.getElementById('valueCosts').innerText = "R$"+Number.parseFloat(cost).toFixed(2)+' / Litro';
 }
 
+//Função que cria um popup de erro na tela do usuário
 function RetornaCampoInválido(listaCamposInvalidos){
     closePopUp();
 
@@ -199,7 +216,8 @@ function RetornaCampoInválido(listaCamposInvalidos){
     popup.appendChild(close);
 
     document.body.appendChild(popup);
-
+    
+    //Destaca com vermelho os campos inválidos
     listaCamposInvalidos.map((campo) => {
         campo.className += ' invalid';
         campo.previousElementSibling.style = 'color: red;';
@@ -208,6 +226,7 @@ function RetornaCampoInválido(listaCamposInvalidos){
     })
 }
 
+// Função que retorna um popup caso uma das seções não tenha valor selecionado
 function RetornaCamposNotChecked(title){
     closePopUp();
 
@@ -228,11 +247,9 @@ function RetornaCamposNotChecked(title){
     document.body.appendChild(popup);
 }
 
-function removeInvalid(campo){
-    campo.className = campo.className.replace(' invalid', '');
-    campo.previousElementSibling.style = 'color: var(--font-color);';
-}
 
+
+// destroi o popup criado
 function closePopUp(){
     let popup = document.getElementById('errorDialog');
 
@@ -240,6 +257,14 @@ function closePopUp(){
         popup.remove();
 }
 
+
+//Remove o efeito de inválido dos campos ao focar.
+function removeInvalid(campo){
+    campo.className = campo.className.replace(' invalid', '');
+    campo.previousElementSibling.style = 'color: var(--font-color);';
+}
+
+// Cria um modal que contem os resultados das rotas
 function OpenModalDetails(resultadosPorRota, resultadosGerais){
     let modalBg = document.createElement('div');
     modalBg.id = 'modalBg';
@@ -290,7 +315,6 @@ function OpenModalDetails(resultadosPorRota, resultadosGerais){
         resultcontainer.appendChild(custoPorDistancia);
         resultcontainer.appendChild(custoPorAluno);
         resultcontainer.appendChild(eficiencia);
-
     });
 
     ResultGeralContainer = document.createElement('article');

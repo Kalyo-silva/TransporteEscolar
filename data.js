@@ -1,15 +1,28 @@
+/*
+
+    ===== Arquivo de Manipulação de dados do sistema =====
+
+    - Responsável pelo armazenamento de dados, cadastro e validação dos dados informados.
+
+*/
+
+
+// Variáveis que servem como memória temporária para o sistema (sem persistência de dados)
 var routes = []
 var vehicles = []
 var cost = 0;
 var results = [];
 var finalResult = {}
 
+
+// função que retorna todos os inputs de um formulario a partir do pai do botao clickado
 function getCamposByParent(button){
     let form = button.parentNode;
 
     return Array.from(form.getElementsByTagName('input'));
 }
 
+// função de validação dos preenchimento dos campos
 function validaCampos(listaCampos){
     let camposInvalidos = []
 
@@ -39,6 +52,7 @@ function validaCampos(listaCampos){
     return true;
 }
 
+// Validação de campos do tipo Text
 function validaCampoText(campo){
     if (campo.value.trim().length <= 0){
         return false;
@@ -46,6 +60,8 @@ function validaCampoText(campo){
     return true;
 }
 
+
+// Validação de campos do tipo number
 function validaCampoNumber(campo){
     if (typeof parseFloat(campo.value) != 'number' 
     || Number.isNaN(parseFloat(campo.value)) 
@@ -55,6 +71,7 @@ function validaCampoNumber(campo){
     return true;   
 }
 
+// Função responsavel por cadastrar as rotas na memória caso validados os campos.
 function cadastrarRota(button){
     let campos = getCamposByParent(button)
     let rota = {}
@@ -71,6 +88,7 @@ function cadastrarRota(button){
 
 }
 
+// Função responsável por cadastrar os veículos na memoria, caso validado os campos
 function CadastrarVeiculo(button){
     let campos = getCamposByParent(button)
     let veiculo = {}
@@ -86,6 +104,7 @@ function CadastrarVeiculo(button){
     }
 }
 
+// Função responsável por cadastrar o gasto na memória, caso validado o campo
 function cadastrarGasto(button){
     let campos = getCamposByParent(button);
     if (validaCampos(campos)){
@@ -94,10 +113,12 @@ function cadastrarGasto(button){
     }
 }
 
+// Função que altera o campo selecionado das rotas, permitindo selecionar mais de uma rota 
 function selectThis(id_route){
     routes[id_route].checked = !routes[id_route].checked;
 }
 
+// Função que altera o campo selecionado dos veículos, permitindo apenas uma seleção.
 function selectOnlyThis(id_vehicle){
     vehicles.map((vehicle) => {
         vehicle.checked = false;
@@ -107,6 +128,7 @@ function selectOnlyThis(id_vehicle){
     updateVehiclesTable(vehicles);
 }
 
+// Verifica se uma array de campos possui algum valor selecionado e caso contrario retorna erro.
 function validaCamposChecked(array, title){
     let ArrayChecked = array.filter((checks) => checks.checked == true);
     
@@ -118,6 +140,7 @@ function validaCamposChecked(array, title){
     return true;
 }
 
+// Valida se o gasto possui um valor positivo > 0
 function validaGasto(gasto){
     if (gasto <= 0){
         RetornaCamposNotChecked('Gastos');
@@ -126,10 +149,12 @@ function validaGasto(gasto){
     return true;
 }
 
+// Retorna o custo da rota em especifico
 function getCustoRota(distancia, consumo, valor){
     return (distancia / consumo) * valor;
 }
 
+//Função que implementa a regra de negócio e salva os resultados em memória.
 function calculaRota(){
     if (validaCamposChecked(routes, 'Rotas') && validaCamposChecked(vehicles, 'Veículos') && validaGasto(cost)){
         closePopUp();
